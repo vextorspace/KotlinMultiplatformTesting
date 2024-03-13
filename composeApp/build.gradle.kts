@@ -48,6 +48,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+        val androidInstrumentedTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(libs.androidx.test.junit)            }
+        }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }

@@ -1,10 +1,10 @@
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class JunitTest {
+class KotlinTest {
 
     @Test
-    fun `test a jUnit 4 assertion`() {
+    fun `test a kotlin test assertion`() {
         assertTrue(true)
     }
 }
