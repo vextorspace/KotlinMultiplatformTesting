@@ -51,7 +51,9 @@ kotlin {
         val androidInstrumentedTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(libs.androidx.test.junit)            }
+                implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.runner)
+            }
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -73,6 +75,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
