@@ -1,3 +1,4 @@
+import io.kotest.matchers.booleans.shouldNotBeFalse
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -8,4 +9,8 @@ class KotlinAndroidUnitTest {
         assertTrue(true)
     }
 
+    @Test
+    fun testKotestAssertion() {
+        true.shouldNotBeFalse()
+    }
 }

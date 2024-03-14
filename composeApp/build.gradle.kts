@@ -43,9 +43,13 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
         }
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(libs.kotest.assertions.core)
             }
         }
         val androidInstrumentedTest by getting {
@@ -53,10 +57,8 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(libs.androidx.test.junit)
                 implementation(libs.androidx.test.runner)
+                implementation(libs.kotest.assertions.core)
             }
-        }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
         }
     }
 }
