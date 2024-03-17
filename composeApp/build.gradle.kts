@@ -96,6 +96,12 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+    sourceSets["main"].apply {
+        res.srcDirs("src/androidMain/res", "src/commonMain/resources")
+    }
+    sourceSets["test"].apply {
+        res.srcDirs("src/androidTest/res", "src/commonTest/resources")
+    }
 }
 
 compose.desktop {
