@@ -43,13 +43,16 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.kotest.assertions.core)
+            }
+        }
+        val desktopTest by getting{
+            resources.srcDir(commonTest.resources.srcDirs)
+            dependencies {
+                implementation(compose.desktop.currentOs)
             }
         }
         val androidInstrumentedTest by getting {
@@ -70,6 +73,8 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["test"].resources.srcDirs("src/commonTest/resources")
+    sourceSets["androidTest"].resources.srcDirs("src/commonTest/resources")
 
     defaultConfig {
         applicationId = "com.ronnev.damon"
@@ -95,12 +100,6 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
-    }
-    sourceSets["main"].apply {
-        res.srcDirs("src/androidMain/res", "src/commonMain/resources")
-    }
-    sourceSets["test"].apply {
-        res.srcDirs("src/androidTest/res", "src/commonTest/resources")
     }
 }
 
