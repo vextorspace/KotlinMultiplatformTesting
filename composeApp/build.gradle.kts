@@ -29,8 +29,12 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting
-        
+
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
