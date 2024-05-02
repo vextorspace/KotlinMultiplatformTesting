@@ -12,3 +12,20 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+
+## Necessary preconditions to run the project in intellij
+1. Install the android sdk command line tools
+2. Install the android sdk
+3. accept the licenses
+4. create a local.properties file in the root of the project and add the following line:
+```sdk.dir=/path/to/your/android/sdk``` or
+```sdk.dir=C\:\\Users\\username\\AppData\\Local\\Android\\Sdk```
+5. rebuild the project
+
+## Running the androidInstrumentedTests
+1. edit configurations
+2. add a new configuration
+3. select Android Instrumented Tests
+4. select the module ...composeApp.androidTest
+5. run tests. Now right-click on the test folder and select run tests should also work.

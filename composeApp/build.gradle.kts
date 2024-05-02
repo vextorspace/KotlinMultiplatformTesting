@@ -71,7 +71,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.ronnev.damon"
+    namespace = "com.ronnev.testing"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -81,7 +81,7 @@ android {
     sourceSets["androidTest"].resources.srcDirs("src/commonTest/resources")
 
     defaultConfig {
-        applicationId = "com.ronnev.damon"
+        applicationId = "com.ronnev.testing"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -113,8 +113,12 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.ronnev.damon"
+            packageName = "com.ronnev.testing"
             packageVersion = "1.0.0"
         }
     }
+}
+
+tasks.withType<Copy>().configureEach{
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
