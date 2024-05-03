@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - testWorkflow  # Set this to your default branch if it's not 'main' jobs:
+jobs:
   hello_world_job:
     name: Hello World
     runs-on: ubuntu-latest  # Specifies the runner environment
