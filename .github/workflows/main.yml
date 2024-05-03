@@ -3,7 +3,7 @@ name: Test GitHub Runners
 on:
   push:
     branches:
-      - testWorkflow  # Set this to your default branch if it's not 'main' jobs:
+      - main  # Set this to your default branch if it's not 'main' jobs:
 jobs:
   hello_world_job:
     name: Hello World
