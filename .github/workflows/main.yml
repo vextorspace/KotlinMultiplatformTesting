@@ -20,8 +20,11 @@ jobs:
       - name: Build Project
         run: ./gradlew build
 
-      - name: Run Tests
-        run: ./gradlew desktopTest
+      - name: Run Desktop Tests
+        run: ./gradlew composeApp:desktopTest
+
+      - name: Run Android Unit Tests
+        run: ./gradlew composeApp:testDebugUnitTest
 
       - name: Create Test Summary
         uses: test-summary/action@v2
