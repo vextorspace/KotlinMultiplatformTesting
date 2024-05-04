@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew composeApp:desktopTest
 
       - name: Run Android Unit Tests
-        run: ./gradlew composeApp:testDebugUnitTest
+        run: ./gradlew composeApp:testUnitTest
 
       - name: Enable KVM group perms
         run: |
