@@ -19,3 +19,6 @@ jobs:
 
       - name: Build Project
         run: ./gradlew build
+
+      - name: Run Tests
+        run: ./gradlew desktopTest
