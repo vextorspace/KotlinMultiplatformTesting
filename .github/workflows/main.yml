@@ -43,7 +43,6 @@ jobs:
         uses: test-summary/action@v2
         with:
           paths: |
-            '**/test-results/**/*.xml'
-            '**/build/outputs/androidTest-results/**/*.xml'
+            '**/*est-results/**/*.xml'
           show: "pass, fail, skip"
 
