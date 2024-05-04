@@ -17,4 +17,5 @@ jobs:
           distribution: 'adopt'
           java-version: '21'
 
-
+      - name: Build Project
+        run: ./gradlew build
