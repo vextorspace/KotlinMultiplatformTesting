@@ -1,17 +1,15 @@
 name: Test GitHub Runners
 
-on:
-  push:
-    branches:
-      - main  # Set this to your default branch if it's not 'main' jobs:
+on: push
+
 jobs:
   hello_world_job:
     name: Hello World
-    runs-on: ubuntu-latest  # Specifies the runner environment
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Run a one-line script
-      run: echo "Hello, GitHub Actions!"
+      - name: Run a one-line script
+        run: echo "Hello, GitHub Actions!"
