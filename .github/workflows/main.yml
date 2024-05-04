@@ -42,7 +42,6 @@ jobs:
       - name: Create Test Summary
         uses: test-summary/action@v2
         with:
-          paths: |
-            '**/*est-results/**/*.xml'
+          paths: '**/*est-results/**/*.xml'
           show: "pass, fail, skip"
 
