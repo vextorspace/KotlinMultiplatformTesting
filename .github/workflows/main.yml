@@ -22,3 +22,9 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew desktopTest
+
+      - name: Create Test Summary
+        uses: test-summary-action@v2
+        with:
+          paths: '**/test-results/**/*.xml'
+          show: "pass, fail, skip"
