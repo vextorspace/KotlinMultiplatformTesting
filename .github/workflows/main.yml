@@ -3,8 +3,8 @@ name: Test GitHub Runners
 on: push
 
 jobs:
-  hello_world_job:
-    name: Hello World
+  build:
+    name: Kotlin Multiplatform Project Build
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,11 @@ jobs:
       - name: Build Project
         run: ./gradlew build
 
+  test:
+    name: Kotlin Multiplatform Project Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Run Desktop Tests
         run: ./gradlew composeApp:desktopTest
 
@@ -44,4 +49,3 @@ jobs:
         with:
           paths: '**/*est-results/**/*.xml'
           show: "pass, fail, skip"
-
