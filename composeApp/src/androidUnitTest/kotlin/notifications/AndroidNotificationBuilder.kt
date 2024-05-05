@@ -14,7 +14,7 @@ class AndroidNotificationBuilder(
         return AndroidNotificationBuilder(this.context, this.channelId, title, this.text)
     }
 
-    fun withText(textContent: String): AndroidNotificationBuilder {
+    fun withText(text: String): AndroidNotificationBuilder {
         return AndroidNotificationBuilder(this.context, this.channelId, this.title, text)
     }
 

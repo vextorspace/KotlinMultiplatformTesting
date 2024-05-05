@@ -51,5 +51,6 @@ class AndroidNotificationBuilderTest {
         notification
             .extras
             .getString(Notification.EXTRA_TEXT)
+            .shouldBe(textContent)
     }
 }
