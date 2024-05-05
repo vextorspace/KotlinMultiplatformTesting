@@ -11,6 +11,10 @@ class AndroidNotificationBuilder(
     private var text: String = "",
     private var smallIcon: Int? = null
 ) {
+    fun build(): Notification {
+        return builder().build()
+    }
+
     fun withTitle(title: String): AndroidNotificationBuilder {
         return AndroidNotificationBuilder(
             context = this.context,
@@ -31,6 +35,16 @@ class AndroidNotificationBuilder(
         )
     }
 
+    fun withChannelId(channelId: String): AndroidNotificationBuilder {
+        return AndroidNotificationBuilder(
+            context = this.context,
+            channelId = channelId,
+            title = this.title,
+            text = this.text,
+            smallIcon = this.smallIcon
+        )
+    }
+
     fun withSmallIcon(smallIcon: Int?): AndroidNotificationBuilder {
         return AndroidNotificationBuilder(
             context = this.context,
@@ -39,10 +53,6 @@ class AndroidNotificationBuilder(
             text = this.text,
             smallIcon = smallIcon
         )
-    }
-
-    fun build(): Notification {
-        return builder().build()
     }
 
     private fun builder(): NotificationCompat.Builder {
@@ -59,15 +69,5 @@ class AndroidNotificationBuilder(
         smallIcon?.let {
             builder.setSmallIcon(it)
         }
-    }
-
-    fun withChannelId(channelId: String): AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(
-            context = this.context,
-            channelId = channelId,
-            title = this.title,
-            text = this.text,
-            smallIcon = this.smallIcon
-        )
     }
 }
