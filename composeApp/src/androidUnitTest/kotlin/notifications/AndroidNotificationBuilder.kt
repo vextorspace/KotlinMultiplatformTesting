@@ -8,20 +8,21 @@ import androidx.core.app.NotificationCompat
 class AndroidNotificationBuilder(
     private val context: Context,
     private val channelId: String,
+    private val channelDescription: String,
     private var title: String = "",
     private var text: String = "",
     private var priority: Int = NotificationCompat.PRIORITY_DEFAULT
 ) {
     fun withTitle(title: String): AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(this.context, this.channelId, title, this.text, this.priority)
+        return AndroidNotificationBuilder(this.context, this.channelId, this.channelDescription, title, this.text, this.priority)
     }
 
     fun withText(text: String): AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(this.context, this.channelId, this.title, text, this.priority)
+        return AndroidNotificationBuilder(this.context, this.channelId, this.channelDescription, this.title, text, this.priority)
     }
 
     fun withPriority(priority: Int): AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(this.context, this.channelId, this.title, this.text, priority)
+        return AndroidNotificationBuilder(this.context, this.channelId, this.channelDescription, this.title, this.text, priority)
     }
 
     fun build(): Notification {
@@ -36,5 +37,6 @@ class AndroidNotificationBuilder(
 
     fun buildChannel(): NotificationChannel {
         return NotificationChannel(channelId, channelId, priority)
+            .apply { description = channelDescription }
     }
 }

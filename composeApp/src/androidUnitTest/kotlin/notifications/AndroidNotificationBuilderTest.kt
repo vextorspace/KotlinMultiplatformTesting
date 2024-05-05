@@ -18,9 +18,10 @@ class AndroidNotificationBuilderTest {
     @Test
     fun `AndroidNotificationBuilder makes a builder with the correct channel id`() {
         val channelId = "::THE CHANNEL ID::"
+        val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val context: Context = ApplicationProvider.getApplicationContext()
 
-        AndroidNotificationBuilder(context, channelId)
+        AndroidNotificationBuilder(context, channelId, channelDescription)
             .build()
             .channelId
             .shouldBe(channelId)
@@ -29,10 +30,11 @@ class AndroidNotificationBuilderTest {
     @Test
     fun `AndroidNotificationBuilder makes a notificationChannel with correct priority`() {
         val channelId = "::THE CHANNEL ID::"
+        val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val priority = NotificationManager.IMPORTANCE_HIGH
         val context: Context = ApplicationProvider.getApplicationContext()
 
-        val channel = AndroidNotificationBuilder(context, channelId)
+        val channel = AndroidNotificationBuilder(context, channelId, channelDescription)
             .withPriority(priority)
             .buildChannel()
         channel
@@ -41,17 +43,20 @@ class AndroidNotificationBuilderTest {
         channel
             .importance
             .shouldBe(priority)
+        channel.description
+            .shouldBe(channelDescription)
     }
 
     @Test
     fun `AndroidNotificationBuilder makes a notification with properties`() {
         val titleText = "::SOME TITLE::"
         val channelId = "::THE CHANNEL ID::"
+        val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val textContent = "::SOME TEXT::"
         val priority = NotificationManager.IMPORTANCE_HIGH
         val context: Context = ApplicationProvider.getApplicationContext()
 
-        val notification = AndroidNotificationBuilder(context, channelId)
+        val notification = AndroidNotificationBuilder(context, channelId, channelDescription)
             .withTitle(titleText)
             .withText(textContent)
             .withPriority(priority)
