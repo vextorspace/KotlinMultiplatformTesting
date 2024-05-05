@@ -6,4 +6,5 @@
   - [x] test that android notification builder creates a Notification object with the correct title
   - [x] test that android notification builder creates a Notification object with the correct content
   - [x] test that android notification builder creates a Notification object with the correct channel id
-  - [ ] test that android notification builder creates a Notification object with the correct priority
+  - [x] test that android notification builder creates a Notification object with the correct priority
+  - [x] test that android notification builder creates a Notification object with the correct small icon

@@ -1,10 +1,14 @@
 package notifications
 
 import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.drawable.Icon
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
+import io.kotest.matchers.equality.shouldBeEqualUsingFields
+import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,7 +20,7 @@ import kotlin.test.Test
 class AndroidNotificationBuilderTest {
 
     @Test
-    fun `AndroidNotificationBuilder makes a builder with the correct channel id`() {
+    fun `AndroidNotificationBuilder_build notification has channel id`() {
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val context: Context = ApplicationProvider.getApplicationContext()
@@ -28,7 +32,7 @@ class AndroidNotificationBuilderTest {
     }
 
     @Test
-    fun `AndroidNotificationBuilder makes a notificationChannel with correct priority`() {
+    fun `AndroidNotificationBuilder_notificationChannel has priority`() {
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val priority = NotificationManager.IMPORTANCE_HIGH
@@ -37,14 +41,35 @@ class AndroidNotificationBuilderTest {
         val channel = AndroidNotificationBuilder(context, channelId, channelDescription)
             .withPriority(priority)
             .buildChannel()
+        verifyChannelId(channel, channelId)
+        verifyChannelPriority(channel, priority)
+        verifyChannelDescription(channel, channelDescription)
+    }
+
+    private fun verifyChannelDescription(
+        channel: NotificationChannel,
+        channelDescription: String
+    ) {
+        channel.description
+            .shouldBe(channelDescription)
+    }
+
+    private fun verifyChannelPriority(
+        channel: NotificationChannel,
+        priority: Int
+    ) {
+        channel
+            .importance
+            .shouldBeExactly(priority)
+    }
+
+    private fun verifyChannelId(
+        channel: NotificationChannel,
+        channelId: String
+    ) {
         channel
             .id
             .shouldBe(channelId)
-        channel
-            .importance
-            .shouldBe(priority)
-        channel.description
-            .shouldBe(channelDescription)
     }
 
     @Test
@@ -53,18 +78,36 @@ class AndroidNotificationBuilderTest {
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val textContent = "::SOME TEXT::"
+        val smallIcon: Int = android.R.drawable.ic_dialog_info
         val priority = NotificationManager.IMPORTANCE_HIGH
         val context: Context = ApplicationProvider.getApplicationContext()
 
-        val notification = AndroidNotificationBuilder(context, channelId, channelDescription)
+        val notificationBuilder =
+            AndroidNotificationBuilder(context, channelId, channelDescription)
+        val notification = notificationBuilder
             .withTitle(titleText)
             .withText(textContent)
             .withPriority(priority)
+            .withSmallIcon(smallIcon)
             .build()
 
         verifyTitle(notification, titleText)
 
         verifyText(notification, textContent)
+
+        verifySmallIconSetToSomething(notification, smallIcon, context)
+    }
+
+    private fun verifySmallIconSetToSomething(
+        notification: Notification,
+        smallIcon: Int,
+        context: Context
+    ) {
+        val icon = Icon.createWithResource(context, smallIcon)
+
+        notification
+            .smallIcon
+            .shouldBeEqualUsingFields(icon)
     }
 
     private fun verifyText(notification: Notification, textContent: String) {
