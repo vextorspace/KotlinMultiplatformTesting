@@ -35,15 +35,21 @@ class AndroidNotificationBuilderTest {
     fun `AndroidNotificationBuilder makes a notification with properties`() {
         val titleText = "::SOME TITLE::"
         val channelId = "::THE CHANNEL ID::"
+        val textContent = "::SOME TEXT::"
         val context: Context = ApplicationProvider.getApplicationContext()
 
         val notification = AndroidNotificationBuilder(context, channelId)
             .withTitle(titleText)
+            .withText(textContent)
             .build()
 
         notification
              .extras
              .getString(Notification.EXTRA_TITLE)
              .shouldBe(titleText)
+
+        notification
+            .extras
+            .getString(Notification.EXTRA_TEXT)
     }
 }
