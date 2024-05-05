@@ -20,12 +20,17 @@ import kotlin.test.Test
 class AndroidNotificationBuilderTest {
 
     @Test
-    fun `AndroidNotificationBuilder_build notification has channel id`() {
+    fun `AndroidNotificationBuilder notification has channel id`() {
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
-        val context: Context = ApplicationProvider.getApplicationContext()
+        val context = ApplicationProvider
+            .getApplicationContext<Context>()
 
-        AndroidNotificationBuilder(context, channelId, channelDescription)
+        AndroidNotificationBuilder(
+            context,
+            channelId,
+            channelDescription
+        )
             .build()
             .channelId
             .shouldBe(channelId)
@@ -36,11 +41,17 @@ class AndroidNotificationBuilderTest {
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val priority = NotificationManager.IMPORTANCE_HIGH
-        val context: Context = ApplicationProvider.getApplicationContext()
+        val context = ApplicationProvider
+            .getApplicationContext<Context>()
 
-        val channel = AndroidNotificationBuilder(context, channelId, channelDescription)
+        val channel = AndroidNotificationBuilder(
+            context,
+            channelId,
+            channelDescription
+        )
             .withPriority(priority)
             .buildChannel()
+
         verifyChannelId(channel, channelId)
         verifyChannelPriority(channel, priority)
         verifyChannelDescription(channel, channelDescription)
@@ -73,18 +84,21 @@ class AndroidNotificationBuilderTest {
     }
 
     @Test
-    fun `AndroidNotificationBuilder makes a notification with properties`() {
+    fun `AndroidNotificationBuilder notification has all properties`() {
         val titleText = "::SOME TITLE::"
         val channelId = "::THE CHANNEL ID::"
         val channelDescription = "::THE CHANNEL DESCRIPTION::"
         val textContent = "::SOME TEXT::"
         val smallIcon: Int = android.R.drawable.ic_dialog_info
         val priority = NotificationManager.IMPORTANCE_HIGH
-        val context: Context = ApplicationProvider.getApplicationContext()
+        val context = ApplicationProvider
+            .getApplicationContext<Context>()
 
-        val notificationBuilder =
-            AndroidNotificationBuilder(context, channelId, channelDescription)
-        val notification = notificationBuilder
+        val notification = AndroidNotificationBuilder(
+            context,
+            channelId,
+            channelDescription
+        )
             .withTitle(titleText)
             .withText(textContent)
             .withPriority(priority)
@@ -110,19 +124,23 @@ class AndroidNotificationBuilderTest {
             .shouldBeEqualUsingFields(icon)
     }
 
-    private fun verifyText(notification: Notification, textContent: String) {
+    private fun verifyText(
+        notification: Notification,
+        textContent: String
+    ) {
         notification
             .extras
             .getString(Notification.EXTRA_TEXT)
             .shouldBe(textContent)
     }
 
-    private fun verifyTitle(notification: Notification, titleText: String) {
+    private fun verifyTitle(
+        notification: Notification,
+        titleText: String
+    ) {
         notification
             .extras
             .getString(Notification.EXTRA_TITLE)
             .shouldBe(titleText)
     }
-
-
 }

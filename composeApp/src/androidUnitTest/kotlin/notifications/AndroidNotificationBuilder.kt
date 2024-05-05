@@ -67,21 +67,19 @@ class AndroidNotificationBuilder(
     }
 
     private fun builder(): NotificationCompat.Builder {
-        var builder = NotificationCompat.Builder(context, channelId)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setContentTitle(title)
             .setContentText(text)
 
-        builder = addIcon(builder)
+        addIconTo(builder)
 
         return builder
     }
 
-    private fun addIcon(builder: NotificationCompat.Builder): NotificationCompat.Builder {
-        var builder1 = builder
+    private fun addIconTo(builder: NotificationCompat.Builder) {
         smallIcon?.let {
-            builder1 = builder1.setSmallIcon(it)
+            builder.setSmallIcon(it)
         }
-        return builder1
     }
 
     fun buildChannel(): NotificationChannel {
