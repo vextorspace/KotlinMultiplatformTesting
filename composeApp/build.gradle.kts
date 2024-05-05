@@ -67,6 +67,13 @@ kotlin {
                 implementation(libs.kotest.assertions.core)
             }
         }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(libs.robolectric)
+                implementation(libs.androidx.test.core.ktx)
+            }
+        }
     }
 }
 
