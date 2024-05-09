@@ -2,6 +2,10 @@ package notifications
 
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.collections.shouldHaveSize
+import java.awt.SystemTray
+import java.awt.Toolkit
+import java.awt.TrayIcon
+import java.lang.Thread.sleep
 import kotlin.test.Test
 
 class NotifySendCreatedTest {
@@ -20,5 +24,28 @@ class NotifySendCreatedTest {
         )
 
         // notifySend.send()
+    }
+
+    @Test
+    fun `should create a notification using powershell`() {
+        val title = "::Title::"
+        val message = "::Message::"
+
+        val trayIcon = TrayIcon(Toolkit.getDefaultToolkit().createImage(""), title)
+            .apply {
+                isImageAutoSize = true
+                displayMessage(title, message, TrayIcon.MessageType.INFO)
+            }
+
+        val tray = SystemTray.getSystemTray()
+
+        try {
+            tray.add(trayIcon)
+            trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO)
+        } catch (e: Exception) {
+            println(e)
+        }
+
+        sleep(10000)
     }
 }
