@@ -9,4 +9,14 @@ class LinuxGtkNotify(val title: String, val message: String) {
         )
     }
 
+    fun send() {
+        try {
+            val process = ProcessBuilder(makeCommand())
+                .start()
+            process.waitFor()
+        } catch (e: Exception) {
+
+        }
+    }
+
 }
