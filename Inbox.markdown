@@ -11,4 +11,5 @@
 - [ ] check that system tray is supported
 - [ ] check that notifications set up properly
 - [x] check that desktop systray notification trayicon added to systray
-- [ ] check that desktop systray notification trayicon sends notification
+- [x] check that desktop systray notification trayicon sends notification
+- [ ] commonMain/Notification
