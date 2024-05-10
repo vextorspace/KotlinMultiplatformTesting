@@ -46,7 +46,7 @@ class NotifySendCreatedTest {
         val tray = mockk<SystemTray>(relaxed = true)
         val trayIcon = mockk<TrayIcon>(relaxed = true)
 
-        val notifier = DesktopTrayNotifier(tray)
+        val notifier = DesktopTrayNotifier(tray, trayIcon)
         notifier.sendNotification(title, message)
 
         verify(exactly = 1) {
