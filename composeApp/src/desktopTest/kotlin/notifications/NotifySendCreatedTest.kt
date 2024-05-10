@@ -16,32 +16,50 @@ class NotifySendCreatedTest {
     fun `if on linux notify is sent through LinuxGtkNotify`() {
         val title = "::Title::"
         val message = "::Message::"
-        val platformIdentifier = mockk<PlatformIdentifier>(relaxed = true)
+        val platformIdentifier =
+            mockk<PlatformIdentifier>(relaxed = true)
         val linuxGtkNotify = mockk<LinuxGtkNotify>(relaxed = true)
-        val desktopTrayNotifier = mockk<DesktopTrayNotifier>(relaxed = true)
+        val desktopTrayNotifier =
+            mockk<DesktopTrayNotifier>(relaxed = true)
         every { platformIdentifier.isLinux() } returns true
 
-        DesktopNotifier(platformIdentifier, linuxGtkNotify, desktopTrayNotifier)
-            .send(title, message)
+        DesktopNotifier(
+            platformIdentifier,
+            linuxGtkNotify,
+            desktopTrayNotifier
+        ).send(title, message)
 
-        verify(exactly = 1) { linuxGtkNotify.send(title, message) }
-        verify(exactly = 0) {desktopTrayNotifier.sendNotification(title, message)}
+        verify(exactly = 1) {
+            linuxGtkNotify.send(title, message)
+        }
+        verify(exactly = 0) {
+            desktopTrayNotifier.sendNotification(title, message)
+        }
     }
 
     @Test
     fun `if not on linux notify is sent through DesktopTrayNotifier`() {
         val title = "::Title::"
         val message = "::Message::"
-        val platformIdentifier = mockk<PlatformIdentifier>(relaxed = true)
+        val platformIdentifier =
+            mockk<PlatformIdentifier>(relaxed = true)
         val linuxGtkNotify = mockk<LinuxGtkNotify>(relaxed = true)
-        val desktopTrayNotifier = mockk<DesktopTrayNotifier>(relaxed = true)
+        val desktopTrayNotifier =
+            mockk<DesktopTrayNotifier>(relaxed = true)
         every { platformIdentifier.isLinux() } returns false
 
-        DesktopNotifier(platformIdentifier, linuxGtkNotify, desktopTrayNotifier)
-            .send(title, message)
+        DesktopNotifier(
+            platformIdentifier,
+            linuxGtkNotify,
+            desktopTrayNotifier
+        ).send(title, message)
 
-        verify(exactly = 0) { linuxGtkNotify.send(title, message) }
-        verify(exactly = 1) { desktopTrayNotifier.sendNotification(title, message) }
+        verify(exactly = 0) {
+            linuxGtkNotify.send(title, message)
+        }
+        verify(exactly = 1) {
+            desktopTrayNotifier.sendNotification(title, message)
+        }
     }
 
     @Test
@@ -49,7 +67,7 @@ class NotifySendCreatedTest {
         val title = "::Title::"
         val message = "::Message::"
         val notifySend = LinuxGtkNotify()
-        val command: List<String> = notifySend.makeCommand(title, message)
+        val command = notifySend.makeCommand(title, message)
         command.shouldHaveSize(3)
         command.shouldContainInOrder(
             "/usr/bin/notify-send",
@@ -57,7 +75,7 @@ class NotifySendCreatedTest {
             message
         )
 
-        // --to actually test the send method, uncomment the following line
+        // --to  test the send method, uncomment the following line
         // notifySend.send(title, message)
     }
 
