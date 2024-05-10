@@ -57,6 +57,7 @@ kotlin {
             resources.srcDir(commonTest.resources.srcDirs)
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation(libs.mockk)
             }
         }
         val androidInstrumentedTest by getting {

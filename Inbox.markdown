@@ -8,3 +8,7 @@
   - [x] test that android notification builder creates a Notification object with the correct channel id
   - [x] test that android notification builder creates a Notification object with the correct priority
   - [x] test that android notification builder creates a Notification object with the correct small icon
+- [ ] check that system tray is supported
+- [ ] check that notifications set up properly
+- [x] check that desktop systray notification trayicon added to systray
+- [ ] check that desktop systray notification trayicon sends notification

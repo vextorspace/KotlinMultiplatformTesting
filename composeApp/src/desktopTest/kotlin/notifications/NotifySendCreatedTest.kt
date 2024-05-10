@@ -2,10 +2,10 @@ package notifications
 
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.collections.shouldHaveSize
+import io.mockk.mockk
+import io.mockk.verify
 import java.awt.SystemTray
-import java.awt.Toolkit
 import java.awt.TrayIcon
-import java.lang.Thread.sleep
 import kotlin.test.Test
 
 class NotifySendCreatedTest {
@@ -23,29 +23,38 @@ class NotifySendCreatedTest {
             message
         )
 
+        // --to actually test the send method, uncomment the following line
         // notifySend.send()
     }
 
     @Test
-    fun `should create a notification using powershell`() {
+    fun `DesktopTrayNotifier adds icon to tray in setup`() {
+        val tray = mockk<SystemTray>(relaxed = true)
+
+        val notifier = DesktopTrayNotifier(tray)
+        val trayIcon = notifier.trayIcon
+
+        verify(exactly = 1) {  tray.add(notifier.trayIcon)}
+    }
+
+
+    @Test
+    fun `DesktopTrayNotifier sends notification`() {
         val title = "::Title::"
         val message = "::Message::"
 
-        val trayIcon = TrayIcon(Toolkit.getDefaultToolkit().createImage(""), title)
-            .apply {
-                isImageAutoSize = true
-                displayMessage(title, message, TrayIcon.MessageType.INFO)
-            }
+        val tray = mockk<SystemTray>(relaxed = true)
+        val trayIcon = mockk<TrayIcon>(relaxed = true)
 
-        val tray = SystemTray.getSystemTray()
+        val notifier = DesktopTrayNotifier(tray)
+        notifier.sendNotification(title, message)
 
-        try {
-            tray.add(trayIcon)
-            trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO)
-        } catch (e: Exception) {
-            println(e)
+        verify(exactly = 1) {
+            trayIcon.displayMessage(
+                title,
+                message,
+                TrayIcon.MessageType.INFO
+            )
         }
-
-        sleep(10000)
     }
 }
