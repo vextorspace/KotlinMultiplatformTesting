@@ -5,7 +5,7 @@ import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
 
-class DesktopTrayNotifier(private val tray: SystemTray, val trayIcon: TrayIcon) {
+class DesktopTrayNotifier(tray: SystemTray, val trayIcon: TrayIcon) {
 
 
     init {
@@ -30,7 +30,6 @@ class DesktopTrayNotifier(private val tray: SystemTray, val trayIcon: TrayIcon) 
         title,
         trayImageResourcePath
     )
-
 
     fun sendNotification(title: String, message: String) {
         trayIcon.displayMessage(
