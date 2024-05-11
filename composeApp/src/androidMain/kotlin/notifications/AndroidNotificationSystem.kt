@@ -9,11 +9,15 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 
-class AndroidNotificationSystem(val context: Context) :
+class AndroidNotificationSystem(val context: Context?) :
     PlatformSpecificNotification {
     private lateinit var channel: NotificationChannel
 
     fun send(notification: Notification) {
+        if(context == null) {
+            return
+        }
+
         val notificationManager =
             NotificationManagerCompat.from(context)
 
@@ -29,10 +33,15 @@ class AndroidNotificationSystem(val context: Context) :
     }
 
     override fun send(title: String, message: String) {
+        if(context == null) {
+            return
+        }
+
         val notification = AndroidNotificationBuilder(context)
             .withTitle(title)
             .withText(message)
-            .withChannelId(channel?.id ?: "")
+            .withChannelId(channel.id)
+            .withSmallIcon(com.ronnev.testing.R.drawable.icon)
             .build()
 
         send(notification)
@@ -40,9 +49,9 @@ class AndroidNotificationSystem(val context: Context) :
 
     fun register(channel: NotificationChannel) {
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+            context?.getSystemService(Context.NOTIFICATION_SERVICE)
+                    as? NotificationManager
+        notificationManager?.createNotificationChannel(channel)
 
         this.channel = channel
     }
