@@ -20,11 +20,18 @@ jobs:
       - name: Build Project
         run: ./gradlew build
 
+      - name: Setup Xvfb on screen 0
+        run: Xvfb :1 -screen 0 1024x768x24 &
+
       - name: Run Desktop Tests
         run: ./gradlew composeApp:desktopTest
+        env:
+          DISPLAY: :1
 
       - name: Run Android Unit Tests
         run: ./gradlew composeApp:testDebugUnitTest
+        env:
+          DISPLAY: :1
 
       - name: Enable KVM group perms
         run: |
@@ -38,6 +45,9 @@ jobs:
           api-level: 30
           script: ./gradlew connectedAndroidTest
           arch: x86_64
+
+      - name: Shutdown Xvfb
+        run: killall Xvfb
 
       - name: Create Test Summary
         uses: test-summary/action@v2
