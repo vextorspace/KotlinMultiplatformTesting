@@ -2,7 +2,7 @@ package notifications
 
 import platform.PlatformIdentifier
 
-class DesktopNotifier(
+class DesktopNotifier (
     private val platformIdentifier: PlatformIdentifier,
     private val linuxGtkNotify: LinuxGtkNotify,
     private val desktopTrayNotifier: DesktopTrayNotifier

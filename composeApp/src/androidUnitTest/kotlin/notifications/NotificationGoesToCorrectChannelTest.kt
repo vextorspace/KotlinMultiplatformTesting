@@ -1,7 +1,6 @@
 package notifications
 
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
@@ -38,7 +37,11 @@ class NotificationGoesToCorrectChannelTest {
         val context = ApplicationProvider
             .getApplicationContext<Context>()
 
-        val channel = createNotificationChannel(context, channelId)
+        val channel =
+            AndroidNotificationChannelBuilder.createNotificationChannel(
+                context,
+                channelId
+            )
 
         AndroidNotificationSystem(
             context
@@ -46,7 +49,7 @@ class NotificationGoesToCorrectChannelTest {
 
         shadowNotificationManager(context)
             .notificationChannels
-            .shouldContain( channel )
+            .shouldContain(channel)
     }
 
     @Test
@@ -65,31 +68,20 @@ class NotificationGoesToCorrectChannelTest {
 
         notificationSystem.send(notification)
 
-        verifyNotificationHasChannel(context, channelId, notification)
+        verifyNotificationAndChannel(context, channelId, notification)
     }
 
-    private fun verifyNotificationHasChannel(
-        context: Context,
-        channelId: String,
-        notification: Notification
-    ) {
-        val notificationReceived = shadowNotificationManager(context)
-            .allNotifications
-            .shouldHaveSize(1)
-            .first()
-        notificationReceived
-            .channelId
-            .shouldBe(channelId)
-        notificationReceived
-            .shouldBeEqual(notification)
-    }
 
     private fun createAndroidNotificationSystemWithChannel(
         context: Context,
         channelId: String
     ): AndroidNotificationSystem {
         val notificationSystem = AndroidNotificationSystem(context)
-        val channel = createNotificationChannel(context, channelId)
+        val channel =
+            AndroidNotificationChannelBuilder.createNotificationChannel(
+                context,
+                channelId
+            )
 
         notificationSystem.register(channel)
         return notificationSystem
@@ -102,27 +94,31 @@ class NotificationGoesToCorrectChannelTest {
         .withChannelId(channelId)
         .build()
 
-    private fun shadowNotificationManager(context: Context):
-            ShadowNotificationManager {
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager
-        val shadowNotificationManager =
-            Shadows.shadowOf(notificationManager)
-        return shadowNotificationManager
-    }
+    companion object {
+        fun verifyNotificationAndChannel(
+            context: Context,
+            channelId: String,
+            notification: Notification
+        ) {
+            val notificationReceived = shadowNotificationManager(context)
+                .allNotifications
+                .shouldHaveSize(1)
+                .first()
+            notificationReceived
+                .channelId
+                .shouldBe(channelId)
+            notificationReceived
+                .shouldBeEqual(notification)
+        }
 
-    private fun createNotificationChannel(
-        context: Context,
-        channelId: String
-    ): NotificationChannel {
-        val channelDescription = "::THE CHANNEL DESCRIPTION::"
-        val channel = AndroidNotificationChannelBuilder(
-            context
-        )
-            .withChannelId(channelId)
-            .withChannelDescription(channelDescription)
-            .build()
-        return channel
+        fun shadowNotificationManager(context: Context):
+                ShadowNotificationManager {
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE)
+                        as NotificationManager
+            val shadowNotificationManager =
+                Shadows.shadowOf(notificationManager)
+            return shadowNotificationManager
+        }
     }
 }

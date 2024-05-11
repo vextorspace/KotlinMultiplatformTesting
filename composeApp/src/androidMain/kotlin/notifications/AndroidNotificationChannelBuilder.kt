@@ -41,4 +41,15 @@ class AndroidNotificationChannelBuilder(
             priority = this.priority
         )
     }
+
+    companion object {
+        fun createNotificationChannel(
+            context: Context,
+            channelId: String
+        ): NotificationChannel {
+            return AndroidNotificationChannelBuilder(context)
+                .withChannelId(channelId)
+                .build()
+        }
+    }
 }
