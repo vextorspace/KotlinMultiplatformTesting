@@ -54,3 +54,9 @@ jobs:
         with:
           paths: '**/*est-results/**/*.xml'
           show: "pass, fail, skip"
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: desktop-test-report
+          path: composeApp/build/reports/tests/desktopTest/index.html
