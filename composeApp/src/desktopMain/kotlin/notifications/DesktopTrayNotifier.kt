@@ -5,34 +5,36 @@ import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
 
-class DesktopTrayNotifier(tray: SystemTray, val trayIcon: TrayIcon) {
+class DesktopTrayNotifier(tray: SystemTray?, val trayIcon: TrayIcon?) {
 
 
     init {
-        tray.add(trayIcon)
+        tray?.add(trayIcon)
     }
 
     constructor(
-        tray: SystemTray = SystemTray.getSystemTray(),
+        tray: SystemTray? = if(SystemTray.isSupported()) SystemTray.getSystemTray() else null,
         title: String = "App Notify",
         trayImageResourcePath: String? = null
     ) : this(
         tray,
-        TrayIcon(
-            createImageFromResource(trayImageResourcePath)
-                ?: makeDefaultImage(),
-            title
-        )
+        tray?.let {
+            TrayIcon(
+                createImageFromResource(trayImageResourcePath)
+                    ?: makeDefaultImage(),
+                title
+            )
+        }
     )
 
     constructor(title: String, trayImageResourcePath: String? = null) : this(
-        SystemTray.getSystemTray(),
+        if(SystemTray.isSupported()) SystemTray.getSystemTray() else null,
         title,
         trayImageResourcePath
     )
 
     fun sendNotification(title: String, message: String) {
-        trayIcon.displayMessage(
+        trayIcon?.displayMessage(
             title,
             message,
             TrayIcon.MessageType.INFO
