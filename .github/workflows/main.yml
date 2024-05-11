@@ -60,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: desktop-test-report
-          path: composeApp/build/reports/tests/desktopTest/index.html
+          path: composeApp/build/reports/tests/desktopTest
